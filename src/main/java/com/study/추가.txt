@@ -1,0 +1,27 @@
+
+spring mvc에서 cors
+
+    @CrossOrigin 어노테이션, 이 경우 인증이 필요한 요청은 모두 거부된다
+
+@Bean 이름은 메소드 이름이나 클래스 이름으로 정해진다
+
+spring security addFilter
+    해당 기능은 SpringSecurity에 FilterComparator에 등록되어 있는 Filter들을 활성화 할때 사용 가능하다.
+    커스텀 filter는 addFilterBefore addFilterAfter를 사용해야한다
+
+
+쿠키(?)
+    도메인으로 접속한 경우 도메인 이름으로 쿠키가 구워지고
+    아이피로 접속한 경우 아이피 주소 앞 3 바이트로 쿠키가 구워진다.
+
+쿠키는 동일 출처 방식 적용된다.
+쿠키는 같은 서버에 의해 만들어진 요청(Request)들에서 Cookie가 HTTP 헤더안에 포함되어 전송된다
+    (자바 스크립트 ip 주소로 서버 통신 response 받은 쿠키가 서버로 안 날라간다)
+    클라이언트 -> 도메인 쿠키 => 자바스트립트 -> ip접속으로 쿠키 // 도메인이 다르다 따라서 쿠키가 서버로 안날라간다
+
+자바스크립트에서 강제로 쿠키를 주입해 오는 request는 서버에서 쿠키를 거부한다 (http only)
+
+방법 1 http only = false 보안에 좋지 않다 // 쿠키 조작할 수 있다.
+방법 2 headers에 authorization라는 키값에 인증정보(id, password)를 요청하는 방식, http basic 방식
+
+bearer 방식 : http basic 개선, id password 대신 토큰을 사용하는 방법 // 토큰의 만료 시간이 있기 때문에 비교적 안정 but 토큰 탈취 안되게 https로 해야함
