@@ -36,5 +36,16 @@ public class RestApiController {
         save.getRoles().forEach(i->System.out.println(i.getType()));
         return "username "+save.getUsername() + "password " + save.getPassword();
     }
-
+    @GetMapping("/api/v1/user")
+    public String user(){
+        return "user";
+    }
+    @GetMapping("/api/v1/manager")
+    public String manager(){
+        return "manager";
+    }
+    @GetMapping("/api/v1/admin")
+    public String admin(){
+        return "admin";
+    }
 }

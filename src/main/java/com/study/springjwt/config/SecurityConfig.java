@@ -1,6 +1,9 @@
 package com.study.springjwt.config;
 
 import com.study.springjwt.config.jwt.JwtAuthenticationFilter;
+import com.study.springjwt.config.jwt.JwtAuthorizationFilter;
+import com.study.springjwt.config.jwt.JwtProperties;
+import com.study.springjwt.repository.UserRepository;
 import com.study.springjwt.util.UserCostumConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserCostumConverter userCostumConverter;
-
+    private final JwtProperties jwtProperties;
+    private final UserRepository userRepository;
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -33,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
        // 폼 로그인 disable 되었으므로 loginProcessingUrl이 동작을 하지 않는다. 따라서 /login 찾을 수 없다고 나온다
        http.formLogin().disable()
-               .addFilter(new JwtAuthenticationFilter(authenticationManager(),userCostumConverter)) //AuthenticationManager를 통해서 인증을 한다 //
+               .addFilter(new JwtAuthenticationFilter(authenticationManager(),userCostumConverter,jwtProperties)) //AuthenticationManager를 통해서 인증을 한다 //
+               .addFilter(new JwtAuthorizationFilter(authenticationManager(),jwtProperties,userRepository)) //AuthenticationManager를 통해서 인증을 한다 //
                .httpBasic().disable()
                .authorizeRequests() //세션에 있어야 spring security 권한 괸리를 해준다
                .mvcMatchers("/api/v1/user/**")
