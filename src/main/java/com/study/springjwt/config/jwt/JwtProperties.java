@@ -19,7 +19,4 @@ public class JwtProperties {
 
     @Value("${custom.jwt.SECRET}")
     private String JWT_SECRET;
-
-    @Value("Issuer")
-    private String JWT_ISSUER;
 }

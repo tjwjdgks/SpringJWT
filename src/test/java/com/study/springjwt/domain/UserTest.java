@@ -28,7 +28,9 @@ class UserTest {
         User newUser = User.createUser("test", "dd", manager, user);
         User save = userRepository.save(newUser);
 
-        assertNotNull(userRepository.findUserWithAllByUsername(newUser.getUsername()).getRoles());
+        User test = userRepository.findUserWithAllByUsername("test");
+        assertNotNull(test.getRoles());
+        test.getRoles().forEach(i->System.out.println(i.getType()));
 
     }
 }
